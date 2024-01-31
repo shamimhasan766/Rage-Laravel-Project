@@ -131,7 +131,27 @@ License: You must have a valid license purchased only from above link or https:/
                     <a href="{{ route('new.category') }}" class="nav-link">Add Sub Category</a>
                   </li>
                   <li class="nav-item">
-                    <a href="" class="nav-link">Trash</a>
+                    <a href="{{ route('subcategory.trash') }}" class="nav-link">Trash</a>
+                  </li>
+                </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#uiComponentsbrand" role="button" aria-expanded="false" aria-controls="uiComponents">
+              <i class="link-icon" data-feather="feather"></i>
+              <span class="link-title">Brands</span>
+              <i class="link-arrow" data-feather="chevron-down"></i>
+            </a>
+            <div class="collapse" id="uiComponentsbrand">
+                <ul class="nav sub-menu">
+                  <li class="nav-item">
+                    <a href="{{ route('brands') }}" class="nav-link">Brands</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ route('add.brand') }}" class="nav-link">Add Brand</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ route('brand.trash') }}" class="nav-link">Trash</a>
                   </li>
                 </ul>
             </div>

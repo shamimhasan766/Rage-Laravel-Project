@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Subcategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
@@ -108,6 +109,8 @@ class CategoryController extends Controller
        $category = Category::onlyTrashed()->find($id);
        unlink($category->photo);
        $category->forceDelete();
+       Subcategory::where('category_id', $id)->delete();
+       Subcategory::onlyTrashed()->where('category_id', $id)->forceDelete();
        return back()->with('force_delete', 'Category "'. $category->name .'" Permanently Deleted');
     }
 
@@ -119,7 +122,7 @@ class CategoryController extends Controller
        return back()->with('selected_delete', 'Selected Categories Deleted');
     }
 
-    
+
     function CategorySelectTrash(Request $request){
         $categories_id = $request->categories_id;
 
@@ -134,6 +137,7 @@ class CategoryController extends Controller
                 $category = Category::onlyTrashed()->find($category_id);
                 unlink($category->photo);
                 $category->forceDelete();
+                Subcategory::where('category_id', $category_id)->delete();
             }
         }
 

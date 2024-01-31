@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\BrandsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\UserController;
+use App\Models\Subcategory;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -51,10 +53,24 @@ Route::post('/category/select/from/trash', [CategoryController::class, 'Category
 // Sub Category
 Route::get('subcategory', [SubcategoryController::class , 'SubCategory'])->middleware(['auth', 'verified'])->name('all.sub.category');
 Route::get('subcategory/new', [SubcategoryController::class , 'AddSubCategory'])->middleware(['auth', 'verified'])->name('new.category');
+Route::post('subcategory/store', [SubcategoryController::class , 'StoreSubCategory'])->middleware(['auth', 'verified'])->name('store.subcategory');
+Route::get('subcategory/delete/{id}', [SubcategoryController::class , 'DeleteSubCategory'])->middleware(['auth', 'verified'])->name('delete.subcategory');
+Route::get('subcategory/trash', [SubcategoryController::class, 'SubcategoryTrash'])->name('subcategory.trash');
+Route::get('/subcategory/restore/{id}', [SubcategoryController::class, 'RestoreSubcategory'])->middleware(['auth', 'verified'])->name('restore.subcategory');
+Route::get('/subcategory/force/delete/{id}', [SubcategoryController::class, 'SubcategoryForceDelete'])->middleware(['auth', 'verified'])->name('subcategory.force.delete');
+Route::post('/subcategory/edit/{id}', [SubcategoryController::class, 'SubcategoryEdit'])->middleware(['auth', 'verified'])->name('subcategory.edit');
 
 
 
+// Brands
+Route::get('brands', [BrandsController::class, 'Brands'])->name('brands');
+Route::get('add/brand', [BrandsController::class, 'AddBrand'])->name('add.brand');
+Route::get('brand/trash', [BrandsController::class, 'BrandTrash'])->name('brand.trash');
 
+Route::post('store/brand', [BrandsController::class, 'StoreBrand'])->name('store.brand');
+Route::get('soft/delete/brand/{id}', [BrandsController::class, 'SoftDeleteBrand'])->name('soft.delete.brand');
+Route::get('/brand/restore/{id}', [BrandsController::class, 'RestoreBrand'])->middleware(['auth', 'verified'])->name('restore.brand');
+Route::get('/brand/force/delete/{id}', [BrandsController::class, 'BrandForceDelete'])->middleware(['auth', 'verified'])->name('brand.force.delete');
 
 
 
