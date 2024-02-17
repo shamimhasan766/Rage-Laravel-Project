@@ -20,12 +20,14 @@
                                     <table class="table table-bordered">
                                         <tr>
                                             <th>Subcategory</th>
+                                            <th>Updated At</th>
                                             <th>Action</th>
                                         </tr>
                                         @foreach (App\Models\Subcategory::where('category_id', $category->id)->get() as $subcategory)
 
                                         <tr>
                                             <td>{{ $subcategory->subcategory }}</td>
+                                            <td>{{ $subcategory->updated_at == null ? '' : $subcategory->updated_at->diffForHumans() }}</td>
                                             <td>
                                                 <a title="Edit {{ $subcategory->subcategory }}" data-subcategory="{{ json_encode(['id' => $subcategory->id, 'subcategory' => $subcategory->subcategory]) }}" class="edit btn btn-primary shadow btn-xs sharp"><i class="fa fa-edit"></i></a>
                                                 <a title="Delete {{ $subcategory->subcategory }}" data-id="{{ $subcategory->id }}" data-name="{{ $subcategory->subcategory }}" class="delete btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
@@ -82,7 +84,7 @@
             Swal.fire({
                 title: "Edit '"+ subcategory + "'",
                 html:
-                    `<label for="subcategory">Enter Subcategory</label>
+                    `<label for="subcategory">Update Subcategory</label>
                     <input type="text" id="subcategory" name="subcategory" class="swal2-input" placeholder="Enter input 1" value="${subcategory}">
                     `,
                 showCancelButton: true,

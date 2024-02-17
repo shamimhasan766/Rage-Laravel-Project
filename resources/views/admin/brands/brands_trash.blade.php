@@ -55,7 +55,7 @@
 
             Swal.fire({
                 title: "Are you sure?",
-                text: "You Want TO Delete The Brand '" + name + "'",
+                text: "You Want TO Delete The Brand '" + name + "' Permanently!!",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",

@@ -13,12 +13,12 @@ class CategoryController extends Controller
 {
     function AllCategory(){
         $categories = Category::all();
-        return view('admin.all_category', [
+        return view('admin.categories.all_category', [
             'categories'=> $categories
         ]);
     }
     function AddCategory(){
-        return view('admin.add_category');
+        return view('admin.categories.add_category');
     }
 
     function CategoryStore(Request $request){
@@ -94,7 +94,7 @@ class CategoryController extends Controller
 
     function TrashCategory(){
         $trashCategories = Category::onlyTrashed()->get();
-        return view('admin.trash',[
+        return view('admin.categories.trash',[
             'categories'=> $trashCategories
         ]);
     }

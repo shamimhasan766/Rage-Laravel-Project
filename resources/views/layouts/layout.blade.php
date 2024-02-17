@@ -16,6 +16,10 @@ License: You must have a valid license purchased only from above link or https:/
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
 	<title>NobleUI Responsive Bootstrap 4 Dashboard Template</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.default.min.css"/>
+
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 	<!-- core:css -->
 	<link rel="stylesheet" href="{{asset('assets/vendors/core/core.css')}}">
 	<!-- endinject -->
@@ -117,7 +121,7 @@ License: You must have a valid license purchased only from above link or https:/
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#uiComponentssub" role="button" aria-expanded="false" aria-controls="uiComponents">
+            <a class="nav-link" data-toggle="collapse" href="#uiComponentssub" role="button" aria-expanded="false" aria-controls="uiComponentssub">
               <i class="link-icon" data-feather="feather"></i>
               <span class="link-title">Sub Category</span>
               <i class="link-arrow" data-feather="chevron-down"></i>
@@ -137,7 +141,7 @@ License: You must have a valid license purchased only from above link or https:/
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#uiComponentsbrand" role="button" aria-expanded="false" aria-controls="uiComponents">
+            <a class="nav-link" data-toggle="collapse" href="#uiComponentsbrand" role="button" aria-expanded="false" aria-controls="uiComponentsbrand">
               <i class="link-icon" data-feather="feather"></i>
               <span class="link-title">Brands</span>
               <i class="link-arrow" data-feather="chevron-down"></i>
@@ -152,6 +156,43 @@ License: You must have a valid license purchased only from above link or https:/
                   </li>
                   <li class="nav-item">
                     <a href="{{ route('brand.trash') }}" class="nav-link">Trash</a>
+                  </li>
+                </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#uiComponentstag" role="button" aria-expanded="false" aria-controls="uiComponentstag">
+              <i class="link-icon" data-feather="feather"></i>
+              <span class="link-title">Tags</span>
+              <i class="link-arrow" data-feather="chevron-down"></i>
+            </a>
+            <div class="collapse" id="uiComponentstag">
+                <ul class="nav sub-menu">
+                  <li class="nav-item">
+                    <a href="{{ route('tags') }}" class="nav-link">Tags</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ route('tags.trash') }}" class="nav-link">Trash</a>
+                  </li>
+                </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#uiComponentsproduct" role="button" aria-expanded="false" aria-controls="uiComponentsproduct">
+              <i class="link-icon" data-feather="feather"></i>
+              <span class="link-title">Products</span>
+              <i class="link-arrow" data-feather="chevron-down"></i>
+            </a>
+            <div class="collapse" id="uiComponentsproduct">
+                <ul class="nav sub-menu">
+                  <li class="nav-item">
+                    <a href="{{ route('add.product') }}" class="nav-link">Add Product</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ route('products') }}" class="nav-link">All Product</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ route('tags.trash') }}" class="nav-link">Trash</a>
                   </li>
                 </ul>
             </div>
@@ -662,6 +703,28 @@ License: You must have a valid license purchased only from above link or https:/
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('assets/js/axios.min.js') }}"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
         @yield('script')
 </body>
 </html>
+
+
+
+
+{{-- <!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  </head>
+  <body>
+    <h1>Hello, world!</h1>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  </body>
+</html> --}}

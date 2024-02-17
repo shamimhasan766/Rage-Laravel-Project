@@ -13,6 +13,16 @@
                         @csrf
                         <div class="mb-3">
                         <label class="form-label">Name</label>
+                        @php
+                            $email = Auth::user()->email;
+                            $parts = explode('@', $email); // Split email into two parts: username and domain
+                            $username = $parts[0];
+                            $domain = $parts[1];
+                            $maskedUsername = substr($username, 0, 2) . str_repeat('*', strlen($username) - 6) . substr($username, -2); // Mask part of the username with stars
+                        @endphp
+
+                        <p>{{ $maskedUsername .'@'. $domain }}</p>
+
                         <input type="name" value="{{Auth::user()->name}}" name="name" class="form-control" id="">
                         </div>
                         <button type="submit" class="btn btn-primary">Update</button>

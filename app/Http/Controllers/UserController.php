@@ -11,7 +11,7 @@ use Intervention\Image\Facades\Image;
 class UserController extends Controller
 {
     function EditProfile(){
-        return view('admin.user_profile');
+        return view('admin.user.user_profile');
     }
     function UpdateProfile(Request $request){
         User::find(Auth::id())->update([
@@ -69,7 +69,7 @@ class UserController extends Controller
 
     function UserList(){
         $users = User::all();
-        return view('admin.userlist', compact('users'));
+        return view('admin.user.userlist', compact('users'));
     }
 
     function UserDelete($id){

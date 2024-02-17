@@ -11,14 +11,14 @@ class SubcategoryController extends Controller
 {
     function SubCategory(){
         $categories = Category::all();
-        return view('admin.subcategory', [
+        return view('admin.subcategory.subcategory', [
             'categories'=>$categories
         ]);
     }
 
     function AddSubCategory(){
         $categories = Category::all();
-        return view('admin.add_subcategory', [
+        return view('admin.subcategory.add_subcategory', [
             'categories'=> $categories
         ]);
     }
@@ -41,7 +41,7 @@ class SubcategoryController extends Controller
     }
     function SubcategoryTrash(){
         $subcategories = Subcategory::onlyTrashed()->get();
-        return view('admin.subcategory_trash', [
+        return view('admin.subcategory.subcategory_trash', [
             'subcategories'=> $subcategories
         ]);
     }
@@ -75,5 +75,33 @@ class SubcategoryController extends Controller
 
 
         return response()->json(['message' => 'Subcategory updated successfully']);
+    }
+
+
+    function SubcategorySelectTrash(Request $request){
+        $subcategories_id = $request->subcategories_id;
+
+
+        foreach ($subcategories_id as $subcategory_id)
+        {
+            if($request->btn == 'restore'){
+                Subcategory::onlyTrashed()->find($subcategory_id)->restore();
+            }
+            else
+            {
+                $subcategory = Subcategory::onlyTrashed()->find($subcategory_id);
+                $subcategory->forceDelete();
+            }
+        }
+
+        // return Back Condition
+        if($request->btn == 'restore'){
+            return back()->with('selected_restore','Selected SubCategory Restored');
+        }
+        else
+        {
+            return back()->with('selected_delete','Selected SubCategories Permanently Deleted');
+        }
+
     }
 }
