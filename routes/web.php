@@ -3,6 +3,7 @@
 use App\Http\Controllers\BrandsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubcategoryController;
@@ -39,11 +40,11 @@ Route::get('/user/delete/{id}', [UserController::class, 'UserDelete'])->middlewa
 // Category
 
 Route::get('/category/all', [CategoryController::class, 'AllCategory'])->middleware(['auth', 'verified'])->name('all.category');
-Route::get('/category/add', [CategoryController::class, 'AddCategory'])->middleware(['auth', 'verified'])->name('add.categories');
+Route::get('/category/insert', [CategoryController::class, 'AddCategory'])->middleware(['auth', 'verified'])->name('add_category');
 Route::post('/category/store', [CategoryController::class, 'CategoryStore'])->middleware(['auth', 'verified'])->name('store.category');
 Route::get('/category/delete/{id}', [CategoryController::class, 'CategoryDelete'])->middleware(['auth', 'verified'])->name('category.delete');
 Route::post('/category/edit/{id}', [CategoryController::class, 'CategoryEdit'])->middleware(['auth', 'verified'])->name('category.edit');
-Route::get('/category/trash', [CategoryController::class, 'TrashCategory'])->middleware(['auth', 'verified'])->name('trash.category');
+Route::get('/category/delete', [CategoryController::class, 'TrashCategory'])->middleware(['auth', 'verified'])->name('trash.category');
 Route::get('/category/restore/{id}', [CategoryController::class, 'RestoreCategory'])->middleware(['auth', 'verified'])->name('restore.category');
 Route::get('/category/force/delete/{id}', [CategoryController::class, 'CategoryForceDelete'])->middleware(['auth', 'verified'])->name('category.force.delete');
 Route::post('/category/select/delete', [CategoryController::class, 'CategorySelectDelete'])->middleware(['auth', 'verified'])->name('category.select.delete');
@@ -54,10 +55,10 @@ Route::post('/category/select/from/trash', [CategoryController::class, 'Category
 
 // Sub Category
 Route::get('subcategory', [SubcategoryController::class , 'SubCategory'])->middleware(['auth', 'verified'])->name('all.sub.category');
-Route::get('subcategory/new', [SubcategoryController::class , 'AddSubCategory'])->middleware(['auth', 'verified'])->name('new.category');
+Route::get('new', [SubcategoryController::class , 'AddSubCategory'])->middleware(['auth', 'verified'])->name('new.subcategory');
 Route::post('subcategory/store', [SubcategoryController::class , 'StoreSubCategory'])->middleware(['auth', 'verified'])->name('store.subcategory');
 Route::get('subcategory/delete/{id}', [SubcategoryController::class , 'DeleteSubCategory'])->middleware(['auth', 'verified'])->name('delete.subcategory');
-Route::get('subcategory/trash', [SubcategoryController::class, 'SubcategoryTrash'])->name('subcategory.trash');
+Route::get('sub/cat/erase', [SubcategoryController::class, 'SubcategoryTrash'])->name('subcategory.trash');
 Route::get('/subcategory/restore/{id}', [SubcategoryController::class, 'RestoreSubcategory'])->middleware(['auth', 'verified'])->name('restore.subcategory');
 Route::get('/subcategory/force/delete/{id}', [SubcategoryController::class, 'SubcategoryForceDelete'])->middleware(['auth', 'verified'])->name('subcategory.force.delete');
 Route::post('/subcategory/edit/{id}', [SubcategoryController::class, 'SubcategoryEdit'])->middleware(['auth', 'verified'])->name('subcategory.edit');
@@ -67,8 +68,8 @@ Route::post('/subcategory/select/from/trash', [SubcategoryController::class, 'Su
 
 // Brands
 Route::get('brands', [BrandsController::class, 'Brands'])->name('brands');
-Route::get('add/brand', [BrandsController::class, 'AddBrand'])->name('add.brand');
-Route::get('brand/trash', [BrandsController::class, 'BrandTrash'])->name('brand.trash');
+Route::get('create', [BrandsController::class, 'AddBrand'])->name('add.brand');
+Route::get('/bra', [BrandsController::class, 'BrandTrash'])->name('brand.trash');
 
 Route::post('store/brand', [BrandsController::class, 'StoreBrand'])->name('store.brand');
 Route::get('soft/delete/brand/{id}', [BrandsController::class, 'SoftDeleteBrand'])->name('soft.delete.brand');
@@ -82,14 +83,14 @@ Route::get('tags', [TagController::class, 'Tags'])->middleware('auth', 'verified
 Route::post('tag/store', [TagController::class, 'TagStore'])->middleware('auth', 'verified')->name('tag.store');
 Route::get('tag/delete/{id}', [TagController::class, 'TagDelete'])->middleware('auth', 'verified')->name('tag.delete');
 Route::post('tag/edit/{id}', [TagController::class, 'TagEdit'])->middleware('auth', 'verified')->name('tag.edit');
-Route::get('tag/trash', [TagController::class, 'TagTrash'])->middleware('auth', 'verified')->name('tags.trash');
+Route::get('wipe', [TagController::class, 'TagTrash'])->middleware('auth', 'verified')->name('tags.trash');
 Route::get('tag/restore/{id}', [TagController::class, 'RestoreTag'])->middleware('auth', 'verified')->name('restore.tag');
 Route::get('tag/delete/permanent/{id}', [TagController::class, 'DeleteTagPermanent'])->middleware('auth', 'verified')->name('tag.delete.permanent');
 
 
 
 // Products
-Route::get('add/product', [ProductController::class, 'AddProduct'])->middleware('auth', 'verified')->name('add.product');
+Route::get('join', [ProductController::class, 'AddProduct'])->middleware('auth', 'verified')->name('add.product');
 Route::post('get/subcategory', [ProductController::class, 'GetSubcategory'])->middleware('auth', 'verified')->name('get.subcategory');
 Route::post('store/product', [ProductController::class, 'ProductStore'])->middleware('auth', 'verified')->name('product.store');
 Route::get('products', [ProductController::class, 'AllProduct'])->middleware('auth', 'verified')->name('products');
@@ -98,6 +99,15 @@ Route::get('product/delete/{id}', [ProductController::class, 'DeleteProduct'])->
 Route::get('product/edit/{id}', [ProductController::class, 'EditProduct'])->middleware('auth', 'verified')->name('edit.product');
 Route::post('update/product', [ProductController::class, 'ProductUpdate'])->middleware('auth', 'verified')->name('update.product');
 Route::get('gallery/image/delete/{id}', [ProductController::class, 'GalleryImageDelete'])->middleware('auth', 'verified')->name('gallery.image.delete');
+
+// Inventory
+Route::get('add/color', [InventoryController::class, 'AddColor'])->middleware('auth', 'verified')->name('add.color');
+Route::post('store/color', [InventoryController::class, 'ColorStore'])->middleware('auth', 'verified')->name('color.store');
+Route::get('add/size', [InventoryController::class, 'AddSize'])->middleware('auth', 'verified')->name('size');
+Route::post('store/size', [InventoryController::class, 'SizeStore'])->middleware('auth', 'verified')->name('size.store');
+Route::get('inventory/{id}', [InventoryController::class, 'Inventory'])->middleware('auth', 'verified')->name('inventory');
+Route::post('inventory/store/{id}', [InventoryController::class, 'InventoryStore'])->middleware('auth', 'verified')->name('inventory.store');
+Route::get('delete/inventory/{id}', [InventoryController::class, 'InventoryDelete'])->middleware('auth', 'verified')->name('delete.inventory');
 
 
 

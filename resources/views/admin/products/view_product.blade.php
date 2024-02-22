@@ -5,7 +5,7 @@
             <div class="card">
                 <div class="card-header"><h3>Product Details</h3></div>
                 <div class="card-body">
-                    <table class="table table-borderd">
+                    <table class="table table-borderd text-wrap">
                         <tr class="mb-2">
                             <th>Product Name</th>
                             <td>{{ $product->product_name }}</td>
@@ -32,15 +32,15 @@
                         </tr>
                         <tr class="mb-2">
                             <th>Discount</th>
-                            <td>{{ $product->discount }}</td>
+                            <td>{{ $product->discount ."%" }}</td>
                         </tr>
-                        <tr class="mb-2">
-                            <th>Short Description</th>
-                            <td>{{ $product->short_desc }}</td>
+                        <tr class="mb-2 text-wrap">
+                            <th class="text-wrap">Short Description</th>
+                            <td class="text-wrap">{{ $product->short_desc }}</td>
                         </tr>
                         <tr class="mb-2">
                             <th>Long Description</th>
-                            <td>{!! $product->long_desc !!}</td>
+                            <td class="text-wrap">{!! $product->long_desc !!}</td>
                         </tr>
                         <tr class="mb-2">
                             <th>Additional Information</th>

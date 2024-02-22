@@ -100,18 +100,18 @@ License: You must have a valid license purchased only from above link or https:/
 
           <li class="nav-item nav-category">Ecommerce</li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#uiComponents" role="button" aria-expanded="false" aria-controls="uiComponents">
+            <a class="nav-link" data-toggle="collapse" href="#Category">
               <i class="link-icon" data-feather="feather"></i>
               <span class="link-title">Category</span>
               <i class="link-arrow" data-feather="chevron-down"></i>
             </a>
-            <div class="collapse" id="uiComponents">
+            <div class="collapse" id="Category">
                 <ul class="nav sub-menu">
                   <li class="nav-item">
                     <a href="{{ route('all.category') }}" class="nav-link">All Categories</a>
                   </li>
                   <li class="nav-item">
-                    <a href="{{ route('add.category') }}" class="nav-link">Add Category</a>
+                    <a href="{{ route('add_category') }}" class="nav-link">Add Category</a>
                   </li>
                   <li class="nav-item">
                     <a href="{{ route('trash.category') }}" class="nav-link">Trash</a>
@@ -121,18 +121,18 @@ License: You must have a valid license purchased only from above link or https:/
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#uiComponentssub" role="button" aria-expanded="false" aria-controls="uiComponentssub">
+            <a class="nav-link" data-toggle="collapse" href="#SubCategory">
               <i class="link-icon" data-feather="feather"></i>
               <span class="link-title">Sub Category</span>
               <i class="link-arrow" data-feather="chevron-down"></i>
             </a>
-            <div class="collapse" id="uiComponentssub">
+            <div class="collapse" id="SubCategory">
                 <ul class="nav sub-menu">
                   <li class="nav-item">
                     <a href="{{ route('all.sub.category') }}" class="nav-link">Sub Categories</a>
                   </li>
                   <li class="nav-item">
-                    <a href="{{ route('new.category') }}" class="nav-link">Add Sub Category</a>
+                    <a href="{{ route('new.subcategory') }}" class="nav-link">Add Sub Category</a>
                   </li>
                   <li class="nav-item">
                     <a href="{{ route('subcategory.trash') }}" class="nav-link">Trash</a>
@@ -141,12 +141,12 @@ License: You must have a valid license purchased only from above link or https:/
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#uiComponentsbrand" role="button" aria-expanded="false" aria-controls="uiComponentsbrand">
+            <a class="nav-link" data-toggle="collapse" href="#Brand">
               <i class="link-icon" data-feather="feather"></i>
               <span class="link-title">Brands</span>
               <i class="link-arrow" data-feather="chevron-down"></i>
             </a>
-            <div class="collapse" id="uiComponentsbrand">
+            <div class="collapse" id="Brand">
                 <ul class="nav sub-menu">
                   <li class="nav-item">
                     <a href="{{ route('brands') }}" class="nav-link">Brands</a>
@@ -161,12 +161,12 @@ License: You must have a valid license purchased only from above link or https:/
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#uiComponentstag" role="button" aria-expanded="false" aria-controls="uiComponentstag">
+            <a class="nav-link" data-toggle="collapse" href="#Tags">
               <i class="link-icon" data-feather="feather"></i>
               <span class="link-title">Tags</span>
               <i class="link-arrow" data-feather="chevron-down"></i>
             </a>
-            <div class="collapse" id="uiComponentstag">
+            <div class="collapse" id="Tags">
                 <ul class="nav sub-menu">
                   <li class="nav-item">
                     <a href="{{ route('tags') }}" class="nav-link">Tags</a>
@@ -178,12 +178,12 @@ License: You must have a valid license purchased only from above link or https:/
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#uiComponentsproduct" role="button" aria-expanded="false" aria-controls="uiComponentsproduct">
+            <a class="nav-link" data-toggle="collapse" href="#Products">
               <i class="link-icon" data-feather="feather"></i>
               <span class="link-title">Products</span>
               <i class="link-arrow" data-feather="chevron-down"></i>
             </a>
-            <div class="collapse" id="uiComponentsproduct">
+            <div class="collapse" id="Products">
                 <ul class="nav sub-menu">
                   <li class="nav-item">
                     <a href="{{ route('add.product') }}" class="nav-link">Add Product</a>
@@ -191,69 +191,24 @@ License: You must have a valid license purchased only from above link or https:/
                   <li class="nav-item">
                     <a href="{{ route('products') }}" class="nav-link">All Product</a>
                   </li>
-                  <li class="nav-item">
-                    <a href="{{ route('tags.trash') }}" class="nav-link">Trash</a>
-                  </li>
                 </ul>
             </div>
           </li>
 
+
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#advancedUI" role="button" aria-expanded="false" aria-controls="advancedUI">
-              <i class="link-icon" data-feather="anchor"></i>
-              <span class="link-title">Advanced UI</span>
-              <i class="link-arrow" data-feather="chevron-down"></i>
-            </a>
-            <div class="collapse" id="advancedUI">
-              <ul class="nav sub-menu">
-                <li class="nav-item">
-                  <a href="pages/advanced-ui/cropper.html" class="nav-link">Cropper</a>
-                </li>
-                <li class="nav-item">
-                    <a href="pages/advanced-ui/owl-carousel.html" class="nav-link">Owl carousel</a>
-                  </li>
-                <li class="nav-item">
-                  <a href="pages/advanced-ui/sweet-alert.html" class="nav-link">Sweet Alert</a>
-                </li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#forms" role="button" aria-expanded="false" aria-controls="forms">
-              <i class="link-icon" data-feather="inbox"></i>
-              <span class="link-title">Forms</span>
-              <i class="link-arrow" data-feather="chevron-down"></i>
-            </a>
-            <div class="collapse" id="forms">
-              <ul class="nav sub-menu">
-                <li class="nav-item">
-                  <a href="pages/forms/basic-elements.html" class="nav-link">Basic Elements</a>
-                </li>
-                <li class="nav-item">
-                  <a href="pages/forms/advanced-elements.html" class="nav-link">Advanced Elements</a>
-                </li>
-                <li class="nav-item">
-                  <a href="pages/forms/editors.html" class="nav-link">Editors</a>
-                </li>
-                <li class="nav-item">
-                  <a href="pages/forms/wizard.html" class="nav-link">Wizard</a>
-                </li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link"  data-toggle="collapse" href="#charts" role="button" aria-expanded="false" aria-controls="charts">
+            <a class="nav-link"  data-toggle="collapse" href="#Variations">
               <i class="link-icon" data-feather="pie-chart"></i>
-              <span class="link-title">Charts</span>
+              <span class="link-title">Variations</span>
               <i class="link-arrow" data-feather="chevron-down"></i>
             </a>
-            <div class="collapse" id="charts">
+            <div class="collapse" id="Variations">
               <ul class="nav sub-menu">
                 <li class="nav-item">
-                  <a href="pages/charts/apex.html" class="nav-link">Apex</a>
+                  <a href="{{ route('add.color') }}" class="nav-link">Color</a>
                 </li>
                 <li class="nav-item">
-                  <a href="pages/charts/chartjs.html" class="nav-link">ChartJs</a>
+                  <a href="{{ route('size') }}" class="nav-link">Size</a>
                 </li>
                 <li class="nav-item">
                   <a href="pages/charts/flot.html" class="nav-link">Flot</a>

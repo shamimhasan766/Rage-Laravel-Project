@@ -190,7 +190,7 @@
 
                         <div class="col-lg-6 m-auto">
                             <div class="mb-5">
-                                <button class="btn btn-primary d-block m-auto">Add Product</button>
+                                <button class="btn btn-success d-block m-auto">Update Product</button>
                             </div>
                         </div>
                     </div>

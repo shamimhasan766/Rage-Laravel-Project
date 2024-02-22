@@ -8,7 +8,7 @@
                 @if (session('success'))
                     <div class="alert alert-success">{{ session('success') }}</div>
                 @endif
-                <table class="table text-wrap">
+                <table class="table-responsive table text-wrap">
                     <tr>
                         <th>SL</th>
                         <th>SKU</th>
@@ -28,11 +28,11 @@
                     <tr>
                         <td>{{ $sl+1 }}</td>
                         <td>{{ $product->sku }}</td>
-                        <td>{{ $product->product_name }}</td>
+                        <td class="text-wrap">{{ $product->product_name }}</td>
                         <td>{{ $product->category_id }}</td>
                         <td>{{ $product->subcategory_id }}</td>
                         <td>{{ $product->brand_id }}</td>
-                        <td>{{ $product->discount }}</td>
+                        <td>{{ $product->discount }}%</td>
                         <td class="text-wrap">{{ $product->short_desc }}</td>
                         {{-- <td>
                             @php
@@ -51,6 +51,7 @@
                                 <ul style="background: #f2f2f2f2; border-radius: 10px;" class="dropdown-menu">
                                   <li><a style="font-size: 20px;" class="dropdown-item" href="{{ route('edit.product', $product->id) }}">Edit</a></li>
                                   <li><a style="font-size: 20px;" class="dropdown-item" href="{{ route('view.product',$product->id) }}">View</a></li>
+                                  <li><a style="font-size: 20px;" class="dropdown-item" href="{{ route('inventory',$product->id) }}">Inventory</a></li>
                                   <li><a style="font-size: 20px;" class="dropdown-item" href="{{ route('delete.product', $product->id) }}">Delete</a></li>
                                 </ul>
                             </div>
