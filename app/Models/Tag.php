@@ -10,4 +10,8 @@ class Tag extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    public function Product()
+    {
+        return $this->belongsToMany(Product::class);
+    }
 }

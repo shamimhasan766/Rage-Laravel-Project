@@ -59,7 +59,11 @@ class InventoryController extends Controller
             'quantity'=> 'required|numeric',
             'price'=> 'required|numeric'
         ]);
-
+        if (Inventory::Where('product_id', $id)->where('color_id', $request->color_id)->where('size_id', $request->size_id)->exists()) {
+            Inventory::Where('product_id', $id)->where('color_id', $request->color_id)->where('size_id', $request->size_id)->increment('quantity', $request->quantity);
+            return back()->withSuccess('Inventory Updated Successfully');
+        }
+        else{
         $product = Product::find($id);
         $after_discount = $request->price - $request->price / 100 * ($product->discount);
         Inventory::insert([
@@ -72,6 +76,7 @@ class InventoryController extends Controller
         ]);
 
         return back()->withSuccess('Inventory Added Successfully');
+        }
     }
     function InventoryDelete($id){
         Inventory::find($id)->delete();

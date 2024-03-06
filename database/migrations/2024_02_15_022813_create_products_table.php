@@ -25,6 +25,7 @@ return new class extends Migration
             $table->longText('additional_info')->nullable();
             $table->string('tags')->nullable();
             $table->string('preview_img');
+            $table->integer('status');
             $table->timestamps();
         });
     }

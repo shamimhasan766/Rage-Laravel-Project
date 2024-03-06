@@ -129,16 +129,12 @@
                         <div class="col-lg-12">
                             <div class="mb-5">
                                 <label for="" class="form-label">Enter Tags</label>
-                                    @php
-                                        $string_tag = $product->tags;
-                                        $explode_tag = explode(',', $string_tag);
-                                    @endphp
                                 <select id="select-gear" class="demo-default" name="tag_name[]" multiple placeholder="Select tag...">
                                     <option value="">Select tags...</option>
                                     <optgroup label="">
                                         @foreach ($tags as $tag)
 
-                                        <option value="{{ $tag->id }}" {{ in_array($tag->id, $explode_tag) ? 'selected' : '' }}>{{ $tag->tag_name }}</option>
+                                        <option value="{{ $tag->id }}" {{ $product->Tags->contains($tag->id) ? 'selected' : '' }}>{{ $tag->tag_name }}</option>
                                         @endforeach
                                     </optgroup>
                                 </select>

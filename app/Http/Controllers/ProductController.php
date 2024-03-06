@@ -87,7 +87,7 @@ class ProductController extends Controller
 
         // tags
         $tags = $request->tag_name;
-        $tags = implode(',' , $tags);
+        $implode_tags = implode(',' , $tags);
 
         // preview Img
         $preview_img = $request->preview_img;
@@ -108,7 +108,7 @@ class ProductController extends Controller
         $newproduct->short_desc = $request->short_desc;
         $newproduct->long_desc = $request->long_desc;
         $newproduct->additional_info = $request->additional_info;
-        $newproduct->tags = $tags;
+        $newproduct->tags = $implode_tags;
         $newproduct->preview_img = 'uploads/product/preview/'.$file_name;
         $newproduct->created_at = Carbon::now();
         $newproduct->save();
@@ -128,7 +128,9 @@ class ProductController extends Controller
                 'created_at'=> Carbon::now()
             ]);
         }
-
+        foreach ($tags as $tag) {
+            $newproduct->tags()->attach($tag);
+        }
         return back()->withSuccess('Product Added Successfully');
     }
     function ViewProduct($id){
@@ -220,7 +222,7 @@ class ProductController extends Controller
 
         // tags
         $tags = $request->tag_name;
-        $tags = implode(',' , $tags);
+        $implode_tags = implode(',' , $tags);
 
         $product = Product::find($request->id);
         $product->category_id = $request->category_id;
@@ -233,7 +235,7 @@ class ProductController extends Controller
         $product->short_desc = $request->short_desc;
         $product->long_desc = $request->long_desc;
         $product->additional_info = $request->additional_info;
-        $product->tags = $tags;
+        $product->tags = $implode_tags;
         $product->updated_at = Carbon::now();
 
 
@@ -263,7 +265,16 @@ class ProductController extends Controller
             }
         }
         $product->save();
+        foreach ($tags as $tag) {
+            $product->tags()->syncWithoutDetaching($tag);
+        }
         return back()->withSuccess('Product Updated');
 
+    }
+    function Changestatus($id){
+        $product = Product::find($id);
+        $product->status = $product->status == 0 ? 1 : 0;
+        $product->save();
+        return back();
     }
 }

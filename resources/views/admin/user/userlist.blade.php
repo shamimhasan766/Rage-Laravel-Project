@@ -6,7 +6,10 @@
     <div class="row">
         <div class="col-lg-10 m-auto">
             <div class="card">
-                <div class="card-header text-center">User List</div>
+                <div class="card-header text-center">
+                    <h3>User List</h3>
+                    <a href="{{ route('new.user') }}" target="blank" class="btn btn-danger btn-sm">Add User</a>
+                </div>
                 <div class="card-body">
                     @if (session('delete'))
                         <div class="alert alert-success">{{ session('delete') }}</div>

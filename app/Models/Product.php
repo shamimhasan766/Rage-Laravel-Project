@@ -17,4 +17,16 @@ class Product extends Model
     function Brand(){
         return $this->belongsTo(Brands::class, 'brand_id');
     }
+    function Inventory(){
+        return $this->hasMany(Inventory::class, 'product_id', 'id');
+    }
+    function Gallery(){
+        return $this->hasMany(Gallery::class, 'product_id', 'id');
+    }
+
+    public function Tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
 }

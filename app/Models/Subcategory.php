@@ -10,4 +10,7 @@ class Subcategory extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    function Category(){
+        return $this->belongsTo(Category::class, 'category_id');
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password as RulesPassword;
 use Intervention\Image\Facades\Image;
 
@@ -79,5 +80,21 @@ class UserController extends Controller
         }
         $user->delete();
         return back()->with('delete', 'User "' .$user->name .'" Deleted');
+    }
+    function NewUser(){
+        return view('admin.user.new_user');
+    }
+    function StoreUser(Request $request){
+        $request->validate([
+            'username' => ['required', 'regex:/^\S*$/'],
+            'email'=> 'required',
+            'password'=> 'required',
+        ]);
+        $NewUser = new User();
+        $NewUser->name = $request->username;
+        $NewUser->email = $request->email;
+        $NewUser->password = Hash::make($request->password);
+        $NewUser->save();
+        return back()->withSuccess('User Added Successfully');
     }
 }

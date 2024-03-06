@@ -20,7 +20,7 @@
                         <th>Short Description</th>
                         {{-- <th>Tags</th> --}}
                         <th>Thumbnail</th>
-                        <th>Updated At</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                     @foreach ($products as $sl=>$product)
@@ -43,7 +43,9 @@
                             @endforeach
                         </td> --}}
                         <td><img src="{{ $product->preview_img }}" alt=""></td>
-                        <td>{{ $product->updated_at }}</td>
+                        <td>
+                            <a href="{{ route('product.status', $product->id) }}" class="badge badge-{{ $product->status == 0? 'danger': 'success' }}">{{ $product->status == 0? 'deactive': 'active' }}</a>
+                        </td>
                         <td>
                             <div class="dropdown">
                                 <i style="cursor: pointer; font-size: 30px;" class="fas fa-ellipsis-v" data-bs-toggle="dropdown" aria-expanded="false"></i>

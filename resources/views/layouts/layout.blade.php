@@ -210,34 +210,22 @@ License: You must have a valid license purchased only from above link or https:/
                 <li class="nav-item">
                   <a href="{{ route('size') }}" class="nav-link">Size</a>
                 </li>
-                <li class="nav-item">
-                  <a href="pages/charts/flot.html" class="nav-link">Flot</a>
-                </li>
-                <li class="nav-item">
-                  <a href="pages/charts/morrisjs.html" class="nav-link">Morris</a>
-                </li>
-                <li class="nav-item">
-                  <a href="pages/charts/peity.html" class="nav-link">Peity</a>
-                </li>
-                <li class="nav-item">
-                  <a href="pages/charts/sparkline.html" class="nav-link">Sparkline</a>
-                </li>
               </ul>
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#tables" role="button" aria-expanded="false" aria-controls="tables">
-              <i class="link-icon" data-feather="layout"></i>
-              <span class="link-title">Table</span>
+            <a class="nav-link"  data-toggle="collapse" href="#Offer">
+              <i class="link-icon" data-feather="pie-chart"></i>
+              <span class="link-title">Offer Sections</span>
               <i class="link-arrow" data-feather="chevron-down"></i>
             </a>
-            <div class="collapse" id="tables">
+            <div class="collapse" id="Offer">
               <ul class="nav sub-menu">
                 <li class="nav-item">
-                  <a href="pages/tables/basic-table.html" class="nav-link">Basic Tables</a>
+                  <a href="{{ route('banner') }}" class="nav-link">Banner</a>
                 </li>
                 <li class="nav-item">
-                  <a href="pages/tables/data-table.html" class="nav-link">Data Table</a>
+                  <a href="{{ route('existing.offer') }}" class="nav-link">Exixting Offer</a>
                 </li>
               </ul>
             </div>

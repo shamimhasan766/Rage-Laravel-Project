@@ -20,8 +20,8 @@
                     @foreach ($inventories as $inventory)
 
                     <tr>
-                        <td>{{ $inventory->Color->color_name }}</td>
-                        <td>{{ $inventory->Size->size_name }}</td>
+                        <td>{{ $inventory->Color == null ? "NA": $inventory->Color->color_name }}</td>
+                        <td>{{ $inventory->Size == null ? "NA" : $inventory->Size->size_name }}</td>
                         <td>{{ $inventory->quantity }}</td>
                         <td>{{ $inventory->price }}</td>
                         <td>{{ $inventory->after_discount }}</td>
@@ -56,6 +56,7 @@
                             <option value="{{ $color->id }}">{{ $color->color_name }}</option>
                             @endforeach
                         </select>
+                        <p><a class="text-success m-2" target="blank" href="{{ route('add.color') }}">not getting your color?</a></p>
                     </div>
                     <div class="mb-3">
                         <label for="">Select Size</label>
@@ -66,6 +67,7 @@
                             <option value="{{ $size->id }}">{{ $size->size_name }}</option>
                             @endforeach
                         </select>
+                        <p><a class="text-success m-2" target="blank" href="{{ route('size') }}">not getting your size?</a></p>
                     </div>
                     <div class="mb-3">
                         <label for="">Quantity</label>

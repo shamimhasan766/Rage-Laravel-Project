@@ -49,11 +49,8 @@
                         <tr class="mb-2">
                             <th>Tags</th>
                             <td>
-                                @php
-                                    $tags = explode(',', $product->tags);
-                                @endphp
-                                @foreach ($tags as $tag)
-                                    <span class="badge badge-sm badge-primary">{{ App\Models\Tag::find($tag)->tag_name }}</span>
+                                @foreach ($product->Tags as $tag)
+                                    <span class="badge badge-sm badge-primary">{{ $tag->tag_name }}</span>
                                 @endforeach
                             </td>
                         </tr>

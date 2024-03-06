@@ -1,0 +1,101 @@
+@font-face {
+    font-family: "flaticon_ecommerce";
+    src: url("../fonts/flaticon_ecommerce1414.ttf?cf9c35ed7fabfc0c1f6c1de270d8ffb8") format("truetype"),
+url("../fonts/flaticon_ecommerce1414.woff?cf9c35ed7fabfc0c1f6c1de270d8ffb8") format("woff"),
+url("../fonts/flaticon_ecommerce1414.woff2?cf9c35ed7fabfc0c1f6c1de270d8ffb8") format("woff2"),
+url("../fonts/flaticon_ecommerce1414.eot?cf9c35ed7fabfc0c1f6c1de270d8ffb8#iefix") format("embedded-opentype"),
+url("../fonts/flaticon_ecommerce1414.svg?cf9c35ed7fabfc0c1f6c1de270d8ffb8#flaticon_ecommerce") format("svg");
+}
+
+i[class^="flaticon-"]:before, i[class*=" flaticon-"]:before {
+    font-family: flaticon_ecommerce !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.flaticon-down:before {
+    content: "\f101";
+}
+.flaticon-search:before {
+    content: "\f102";
+}
+.flaticon-heart:before {
+    content: "\f103";
+}
+.flaticon-user-profile:before {
+    content: "\f104";
+}
+.flaticon-right-and-left:before {
+    content: "\f105";
+}
+.flaticon-refresh:before {
+    content: "\f106";
+}
+.flaticon-add-to-cart:before {
+    content: "\f107";
+}
+.flaticon-star:before {
+    content: "\f108";
+}
+.flaticon-arrow-point-to-right:before {
+    content: "\f109";
+}
+.flaticon-right-arrow:before {
+    content: "\f10a";
+}
+.flaticon-left-arrow:before {
+    content: "\f10b";
+}
+.flaticon-left-arrow-1:before {
+    content: "\f10c";
+}
+.flaticon-pin:before {
+    content: "\f10d";
+}
+.flaticon-mail:before {
+    content: "\f10e";
+}
+.flaticon-phone:before {
+    content: "\f10f";
+}
+.flaticon-facebook-app-symbol:before {
+    content: "\f110";
+}
+.flaticon-twitter:before {
+    content: "\f111";
+}
+.flaticon-instagram:before {
+    content: "\f112";
+}
+.flaticon-linkedin:before {
+    content: "\f113";
+}
+.flaticon-grid:before {
+    content: "\f114";
+}
+.flaticon-menu:before {
+    content: "\f115";
+}
+.flaticon-tick:before {
+    content: "\f116";
+}
+.flaticon-remove:before {
+    content: "\f117";
+}
+.flaticon-downward-arrow:before {
+    content: "\f118";
+}
+.flaticon-coupon:before {
+    content: "\f119";
+}
+.flaticon-eye:before {
+    content: "\f11a";
+}
+.flaticon-quote:before {
+    content: "\f11b";
+}

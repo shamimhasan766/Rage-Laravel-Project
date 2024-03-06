@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\BrandsController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\ProductController;
@@ -22,11 +24,19 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+// Frontend
+Route::get('/', [FrontendController::class, 'Index'])->name('index');
+Route::get('/product/details/{slug}', [FrontendController::class, 'ProductDetails'])->name('product.details');
+Route::post('/get/size/', [FrontendController::class, 'GetSize'])->name('get.size');
+Route::get('/category/product/{slug}', [FrontendController::class, 'CategoryProduct'])->name('category.product');
+Route::get('/subcategory/product/{id}', [FrontendController::class, 'SubcategoryProduct'])->name('subcategory.product');
+Route::get('/tag/product/{id}', [FrontendController::class, 'TagProduct'])->name('tag.product');
+Route::get('/exciting/offer/{discount}', [FrontendController::class, 'ExcitingOffer'])->name('exciting.offer');
+Route::get('/all/product', [FrontendController::class, 'AllProduct'])->name('all.product');
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
+
+// backend
 Route::get('/dashboard',[HomeController::class, 'Dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/dark/dashboard',[HomeController::class, 'Dark'])->middleware(['auth', 'verified'])->name('dark');
 Route::get('/edit/profile', [UserController::class, 'EditProfile'])->middleware(['auth', 'verified'])->name('editprofile');
@@ -35,6 +45,8 @@ Route::post('/update/password', [UserController::class, 'UpdatePassword'])->midd
 Route::post('/update/photo', [UserController::class, 'UpdatePhoto'])->middleware(['auth', 'verified'])->name('update.photo');
 Route::get('/user/list', [UserController::class, 'UserList'])->middleware(['auth', 'verified'])->name('user.list');
 Route::get('/user/delete/{id}', [UserController::class, 'UserDelete'])->middleware(['auth', 'verified'])->name('user.delete');
+Route::get('/new/user', [UserController::class, 'NewUser'])->middleware(['auth', 'verified'])->name('new.user');
+Route::post('/store/user', [UserController::class, 'StoreUser'])->middleware(['auth', 'verified'])->name('store.user');
 
 
 // Category
@@ -99,6 +111,7 @@ Route::get('product/delete/{id}', [ProductController::class, 'DeleteProduct'])->
 Route::get('product/edit/{id}', [ProductController::class, 'EditProduct'])->middleware('auth', 'verified')->name('edit.product');
 Route::post('update/product', [ProductController::class, 'ProductUpdate'])->middleware('auth', 'verified')->name('update.product');
 Route::get('gallery/image/delete/{id}', [ProductController::class, 'GalleryImageDelete'])->middleware('auth', 'verified')->name('gallery.image.delete');
+Route::get('change/status/{id}', [ProductController::class, 'Changestatus'])->middleware('auth', 'verified')->name('product.status');
 
 // Inventory
 Route::get('add/color', [InventoryController::class, 'AddColor'])->middleware('auth', 'verified')->name('add.color');
@@ -109,6 +122,12 @@ Route::get('inventory/{id}', [InventoryController::class, 'Inventory'])->middlew
 Route::post('inventory/store/{id}', [InventoryController::class, 'InventoryStore'])->middleware('auth', 'verified')->name('inventory.store');
 Route::get('delete/inventory/{id}', [InventoryController::class, 'InventoryDelete'])->middleware('auth', 'verified')->name('delete.inventory');
 
+// Banner
+Route::get('banner', [BannerController::class, 'Banner'] )->middleware('auth', 'verified')->name('banner');
+Route::post('banner/store', [BannerController::class, 'BannerStore'] )->middleware('auth', 'verified')->name('banner.store');
+Route::get('banner/status/{id}', [BannerController::class, 'BannerStatus'] )->middleware('auth', 'verified')->name('banner.status');
+Route::get('banner/delete/{id}', [BannerController::class, 'BannerDelete'] )->middleware('auth', 'verified')->name('banner.delete');
+Route::get('existing/offer', [BannerController::class, 'ExistingOffer'] )->middleware('auth', 'verified')->name('existing.offer');
 
 
 Route::middleware('auth')->group(function () {
