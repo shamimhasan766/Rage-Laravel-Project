@@ -3,6 +3,8 @@
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\BrandsController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CustomerAuthController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InventoryController;
@@ -128,6 +130,20 @@ Route::post('banner/store', [BannerController::class, 'BannerStore'] )->middlewa
 Route::get('banner/status/{id}', [BannerController::class, 'BannerStatus'] )->middleware('auth', 'verified')->name('banner.status');
 Route::get('banner/delete/{id}', [BannerController::class, 'BannerDelete'] )->middleware('auth', 'verified')->name('banner.delete');
 Route::get('existing/offer', [BannerController::class, 'ExistingOffer'] )->middleware('auth', 'verified')->name('existing.offer');
+
+// Customer Authentication
+Route::get('customer/login', [CustomerAuthController::class, 'CustomerLogin'])->name('customer.login');
+Route::get('customer/register', [CustomerAuthController::class, 'CustomerRegister'])->name('customer.register');
+Route::post('customer/store', [CustomerAuthController::class, 'CustomerStore'])->name('customer.store');
+Route::post('customer/login/check', [CustomerAuthController::class, 'CustomerLoginCheck'])->name('customer.login.check');
+Route::get('customer/logout', [CustomerAuthController::class, 'CustomerLogout'])->name('customer.logout');
+
+// Customer
+Route::get('customer/profile', [CustomerController::class, 'CustomerProfile'])->name('customer.profile');
+Route::post('customer/account/details', [CustomerController::class, 'CustomerAccountDetails'])->name('customer.account.details');
+Route::post('customer/password/update', [CustomerController::class, 'CustomerPasswordUpdate'])->name('customer.password.update');
+Route::post('customer/get/city', [CustomerController::class, 'CustomerGetCity'])->name('customer.get.city');
+Route::post('customer/update/address', [CustomerController::class, 'CustomerUpdateAddress'])->name('customer.update.address');
 
 
 Route::middleware('auth')->group(function () {

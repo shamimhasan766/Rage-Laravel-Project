@@ -23,6 +23,7 @@
     <link href="{{ asset('frontend/') }}/css/jquery.fancybox.css" rel="stylesheet">
     <link href="{{ asset('frontend/') }}/css/odometer-theme-default.css" rel="stylesheet">
     <link href="{{ asset('frontend/') }}/sass/style.css" rel="stylesheet">
+    @yield('link')
 </head>
 
 <body>
@@ -123,7 +124,26 @@
                                 <ul>
                                     <li><a href="compare.html"><i class="fi flaticon-right-and-left"></i><span>Compare</span></a>
                                     </li>
-                                    <li><a href="login.html"><i class="fi flaticon-user-profile"></i><span>Login</span></a></li>
+                                    <li>
+                                        @auth('customer')
+                                            @if (Auth::guard('customer')->user()->photo)
+                                            <a href="{{ route('customer.profile') }}">
+                                                <img style="border-radius: 100%" height="40" id="" src="{{ asset(Auth::guard('customer')->user()->photo) }}" alt="">
+                                            </a>
+                                            @else
+                                            <a href="{{ route('customer.profile') }}">
+                                                <span>
+                                                    <img height="40" id="" src="{{ Avatar::create(Auth::guard('customer')->user()->name)->toBase64() }}" alt="">
+                                                </span>
+                                            </a>
+                                            @endif
+                                        @else
+                                        <a href="{{ route('customer.login') }}">
+                                            <i class="fi flaticon-user-profile"></i>
+                                            <span>Login</span>
+                                        </a>
+                                        @endauth
+                                    </li>
                                     <li>
                                         <div class="header-wishlist-form-wrapper">
                                             <button class="wishlist-toggle-btn"> <i class="fi flaticon-heart"></i>
@@ -448,6 +468,7 @@
     <script src="{{ asset('frontend/') }}/js/jquery-plugin-collection.js"></script>
     <!-- Custom script for this template -->
     <script src="{{ asset('frontend/') }}/js/script.js"></script>
+    @yield('scripts')
     <!-- Bootstrap JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
