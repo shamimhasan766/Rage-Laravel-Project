@@ -139,11 +139,11 @@ Route::post('customer/login/check', [CustomerAuthController::class, 'CustomerLog
 Route::get('customer/logout', [CustomerAuthController::class, 'CustomerLogout'])->name('customer.logout');
 
 // Customer
-Route::get('customer/profile', [CustomerController::class, 'CustomerProfile'])->name('customer.profile');
-Route::post('customer/account/details', [CustomerController::class, 'CustomerAccountDetails'])->name('customer.account.details');
-Route::post('customer/password/update', [CustomerController::class, 'CustomerPasswordUpdate'])->name('customer.password.update');
-Route::post('customer/get/city', [CustomerController::class, 'CustomerGetCity'])->name('customer.get.city');
-Route::post('customer/update/address', [CustomerController::class, 'CustomerUpdateAddress'])->name('customer.update.address');
+Route::get('customer/profile', [CustomerController::class, 'CustomerProfile'])->middleware('customer.auth', 'verified')->name('customer.profile');
+Route::post('customer/account/details', [CustomerController::class, 'CustomerAccountDetails'])->middleware('customer.auth', 'verified')->name('customer.account.details');
+Route::post('customer/password/update', [CustomerController::class, 'CustomerPasswordUpdate'])->middleware('customer.auth', 'verified')->name('customer.password.update');
+Route::post('customer/get/city', [CustomerController::class, 'CustomerGetCity'])->middleware('customer.auth', 'verified')->name('customer.get.city');
+Route::post('customer/update/address', [CustomerController::class, 'CustomerUpdateAddress'])->middleware('customer.auth', 'verified')->name('customer.update.address');
 
 
 Route::middleware('auth')->group(function () {
