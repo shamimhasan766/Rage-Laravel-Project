@@ -16,6 +16,7 @@
         "vite": "^5.0.0"
     },
     "dependencies": {
-        "@selectize/selectize": "^0.15.2"
+        "@selectize/selectize": "^0.15.2",
+        "sweetalert2": "^11.10.6"
     }
 }

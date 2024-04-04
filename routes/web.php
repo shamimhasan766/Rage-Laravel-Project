@@ -2,7 +2,11 @@
 
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\BrandsController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ChargeController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\CustomerAuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\FrontendController;
@@ -35,6 +39,8 @@ Route::get('/subcategory/product/{id}', [FrontendController::class, 'Subcategory
 Route::get('/tag/product/{id}', [FrontendController::class, 'TagProduct'])->name('tag.product');
 Route::get('/exciting/offer/{discount}', [FrontendController::class, 'ExcitingOffer'])->name('exciting.offer');
 Route::get('/all/product', [FrontendController::class, 'AllProduct'])->name('all.product');
+Route::post('/get/price/quantity', [FrontendController::class, 'GetQuantityPrice'])->name('get.quantity.price');
+Route::get('/all/carts', [CartController::class, 'Cart'])->middleware('customer.auth')->name('cart');
 
 
 
@@ -139,11 +145,35 @@ Route::post('customer/login/check', [CustomerAuthController::class, 'CustomerLog
 Route::get('customer/logout', [CustomerAuthController::class, 'CustomerLogout'])->name('customer.logout');
 
 // Customer
-Route::get('customer/profile', [CustomerController::class, 'CustomerProfile'])->middleware('customer.auth', 'verified')->name('customer.profile');
-Route::post('customer/account/details', [CustomerController::class, 'CustomerAccountDetails'])->middleware('customer.auth', 'verified')->name('customer.account.details');
-Route::post('customer/password/update', [CustomerController::class, 'CustomerPasswordUpdate'])->middleware('customer.auth', 'verified')->name('customer.password.update');
-Route::post('customer/get/city', [CustomerController::class, 'CustomerGetCity'])->middleware('customer.auth', 'verified')->name('customer.get.city');
-Route::post('customer/update/address', [CustomerController::class, 'CustomerUpdateAddress'])->middleware('customer.auth', 'verified')->name('customer.update.address');
+Route::get('customer/profile', [CustomerController::class, 'CustomerProfile'])->middleware('customer.auth')->name('customer.profile');
+Route::post('customer/account/details', [CustomerController::class, 'CustomerAccountDetails'])->middleware('customer.auth')->name('customer.account.details');
+Route::post('customer/password/update', [CustomerController::class, 'CustomerPasswordUpdate'])->middleware('customer.auth')->name('customer.password.update');
+Route::post('customer/get/city', [CustomerController::class, 'CustomerGetCity'])->middleware('customer.auth')->name('customer.get.city');
+Route::post('customer/update/address', [CustomerController::class, 'CustomerUpdateAddress'])->middleware('customer.auth')->name('customer.update.address');
+
+
+// Cart
+Route::post('add/to/cart/{slug}', [CartController::class, 'AddToCart'])->middleware('customer.auth')->name('add.to.cart');
+Route::get('cart/remove/{id}', [CartController::class, 'CartRemove'])->middleware('customer.auth')->name('cart.remove');
+Route::post('cart/update/', [CartController::class, 'CartUpdate'])->middleware('customer.auth')->name('cart.update');
+
+
+// Coupon
+Route::get('all/coupon', [CouponController::class, 'AllCoupon'])->middleware('auth', 'verified')->name('all.coupon');
+Route::get('add/coupon', [CouponController::class, 'AddCoupon'])->middleware('auth', 'verified')->name('add.coupon');
+Route::get('trash/coupon', [CouponController::class, 'TrashCoupon'])->middleware('auth', 'verified')->name('trash.coupon');
+Route::post('store/coupon', [CouponController::class, 'StoreCoupon'])->middleware('auth', 'verified')->name('store.coupon');
+
+// Checkout
+Route::get('checkout', [CheckoutController::class, 'Checkout'])->middleware('customer.auth')->name('checkout');
+
+
+// Delevery Charge
+Route::get('charge', [ChargeController::class, 'Charge'])->middleware('auth', 'verified')->name('charge');
+Route::post('store/charge', [ChargeController::class, 'StoreCharge'])->middleware('auth', 'verified')->name('store.charge');
+Route::get('delete/charge/{id}', [ChargeController::class, 'DeleteCharge'])->middleware('auth', 'verified')->name('delete.charge');
+Route::post('get/charge', [ChargeController::class, 'GetCharge'])->middleware('auth', 'verified')->name('get.charge');
+
 
 
 Route::middleware('auth')->group(function () {

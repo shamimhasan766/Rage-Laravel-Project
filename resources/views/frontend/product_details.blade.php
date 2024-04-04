@@ -43,81 +43,89 @@
                 </div>
             </div>
             <div class="col-lg-7">
-                <div class="product-single-content">
-                    <h2 class="text-start">{{ $product->product_name }}</h2>
-                    <div class="price">
-                        @if ($product->discount)
-                            <span class="present-price">&#2547;{{ $product->Inventory->first()->after_discount }}</span>
-                            <del class="old-price">&#2547;{{ $product->Inventory->first()->price }}</del>
-                            @else
-                            <span class="present-price">&#2547;{{ $product->Inventory->first()->after_discount }}</span>
-                        @endif
-                    </div>
-                    <div class="rating-product">
-                        <i class="fi flaticon-star"></i>
-                        <i class="fi flaticon-star"></i>
-                        <i class="fi flaticon-star"></i>
-                        <i class="fi flaticon-star"></i>
-                        <i class="fi flaticon-star"></i>
-                        <span>120</span>
-                    </div>
-                    <p>{{$product->short_desc}}
-                    </p>
-                    <div class="product-filter-item color">
-                        <div class="color-name">
-                            <span>Color :</span>
-                            <ul>
-                                @foreach ($avaiable_colors as $color)
-                                @if ($color->color_id == null)
-                                <li class="color1"><input checked id="color" type="radio" name="color" value="">
-                                    <label for="color">NA</label>
-                                </li>
+                <form action="{{ route('add.to.cart', $product->slug) }}" method="POST">
+                    @csrf
+                    <div class="product-single-content">
+                        <h2 class="text-start">{{ $product->product_name }}</h2>
+                        <div class="price">
+                            @if ($product->discount)
+                                <span class="present-price">&#2547;{{ $product->Inventory->first()->after_discount }}</span>
+                                <del class="old-price">&#2547;{{ $product->Inventory->first()->price }}</del>
                                 @else
-                                <li class="color1"><input class="color_id" id="color{{ $color->color_id }}" type="radio" name="color" value="{{ $color->color_id }}">
-                                    <label style="background: {{ $color->Color->color_code }}" for="color{{ $color->color_id }}"></label>
-                                </li>
-                                @endif
-                                @endforeach
-                            </ul>
+                                <span class="present-price">&#2547;{{ $product->Inventory->first()->after_discount }}</span>
+                            @endif
                         </div>
-                    </div>
-                    <div class="product-filter-item color filter-size">
-                        <div class="color-name">
-                            <span>Sizes:</span>
-                            <ul class="size_item">
-                                @foreach ($avaiable_sizes as $size)
-                                @if ($size->size_id == null)
+                        <div class="rating-product">
+                            <i class="fi flaticon-star"></i>
+                            <i class="fi flaticon-star"></i>
+                            <i class="fi flaticon-star"></i>
+                            <i class="fi flaticon-star"></i>
+                            <i class="fi flaticon-star"></i>
+                            <span>120</span>
+                        </div>
+                        <p>{{$product->short_desc}}
+                        </p>
+                        <div class="product-filter-item color">
+                            <div class="color-name">
+                                <span>Color :</span>
+                                <ul>
+                                    @foreach ($avaiable_colors as $color)
+                                    @if ($color->color_id == null)
+                                    <li class="color1"><input id="color" type="radio" name="color" value="">
+                                        <label for="color">NA</label>
+                                    </li>
+                                    @else
+                                    <li class="color1"><input class="color_id" id="color{{ $color->color_id }}" type="radio" name="color" value="{{ $color->color_id }}">
+                                        <label style="background: {{ $color->Color->color_code }}" for="color{{ $color->color_id }}"></label>
+                                    </li>
+                                    @endif
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="product-filter-item color filter-size">
+                            <div class="color-name">
+                                <span>Sizes:</span>
+                                <ul class="size_item">
+                                    @foreach ($avaiable_sizes as $size)
+                                    @if ($size->size_id == null)
 
-                                <li class="color"><input id="size" type="radio" name="size" value="">
-                                    <label for="size">NA</label>
-                                </li>
-                                @else
-                                <li class="color"><input id="size{{ $size->size_id }}" type="radio" name="size" value="{{ $size->size_id }}">
-                                    <label for="size{{ $size->size_id }}">{{ $size->Size->size_name }}</label>
-                                </li>
-                                @endif
-                                @endforeach
-                            </ul>
+                                    <li class="color"><input class="size_id" id="size" type="radio" name="size" value="">
+                                        <label for="size">NA</label>
+                                    </li>
+                                    @else
+                                    <li class="color"><input class="size_id" id="size{{ $size->size_id }}" type="radio" name="size" value="{{ $size->size_id }}">
+                                        <label for="size{{ $size->size_id }}">{{ $size->Size->size_name }}</label>
+                                    </li>
+                                    @endif
+                                    @endforeach
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                    <div class="pro-single-btn">
-                        <div class="quantity cart-plus-minus">
-                            <input class="text-value" type="text" value="1">
+                        <div class="pro-single-btn">
+                            <div class="quantity cart-plus-minus">
+                                <input class="text-value" type="text" name="quantity" value="1">
+                            </div>
+                            @auth('customer')
+                            <button type="submit" class="theme-btn-s2">Add to cart</button>
+                            @else
+                            <a href="{{ route('customer.login') }}" class="theme-btn-s2">Add to cart</a>
+                            @endauth
+                            <a href="#" class="wl-btn"><i class="fi flaticon-heart"></i></a>
                         </div>
-                        <a href="#" class="theme-btn-s2">Add to cart</a>
-                        <a href="#" class="wl-btn"><i class="fi flaticon-heart"></i></a>
+                        <ul class="important-text">
+
+                            <li><span>SKU: </span>{{ $product->sku }}</li>
+                            <li><span>Categories: </span>{{ $product->Category->name }}</li>
+                            <li><span>Tags: </span>
+                            @foreach ($product->Tags as $tag)
+                                <a href="{{ route('tag.product', $tag->id) }}" class="text-black">#{{ $tag->tag_name }}</a>
+                            @endforeach
+                            </li>
+                            <li class="stock"><span>Stock:</span>{{ $product->Inventory->first()->quantity }} Items In Stock</li>
+                        </ul>
                     </div>
-                    <ul class="important-text">
-                        <li><span>SKU: </span>{{ $product->sku }}</li>
-                        <li><span>Categories: </span>{{ $product->Category->name }}</li>
-                        <li><span>Tags: </span>
-                        @foreach ($product->Tags as $tag)
-                            <a href="{{ route('tag.product', $tag->id) }}" class="text-black">#{{ $tag->tag_name }}</a>
-                        @endforeach
-                        </li>
-                        <li><span>Stock:</span>{{ $product->Inventory->first()->quantity }} Items In Stock</li>
-                    </ul>
-                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -347,6 +355,7 @@
 @endsection
 
 @section('script')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $('.color_id').on('click', function(){
             let color_id = $(this).val();
@@ -363,8 +372,42 @@
                 data: {'color_id': color_id, 'product_id': product_id},
                 success:function(data){
                     $('.size_item').html(data);
+
                 }
             })
         })
-    </script>
+        $(document).on('click', '.size_id', function(){
+        let size_id = $(this).val();
+        let color_id = $('.color_id').val();
+        let product_id = '{{ $product->id }}';
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            url: '{{route('get.quantity.price')}}',
+            type: 'POST',
+            data: {'color_id': color_id, 'product_id': product_id, 'size_id': size_id},
+            success:function(data){
+                $('.price').html(data.price);
+            }
+        });
+    });
+
+
+        </script>
+        @if (session('addtocart'))
+        <script>
+            Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "{{ session('addtocart') }}",
+            showConfirmButton: false,
+            timer: 1500
+            });
+        </script>
+        @endif
 @endsection

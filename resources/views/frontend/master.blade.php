@@ -23,6 +23,7 @@
     <link href="{{ asset('frontend/') }}/css/jquery.fancybox.css" rel="stylesheet">
     <link href="{{ asset('frontend/') }}/css/odometer-theme-default.css" rel="stylesheet">
     <link href="{{ asset('frontend/') }}/sass/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="">
     @yield('link')
 </head>
 
@@ -45,49 +46,7 @@
         <!-- end preloader -->
 
         <!-- start header -->
-        <header id="header">
-            <div class="topbar">
-                <div class="container">
-                    <div class="row">
-                        <div class="col col-lg-6 col-md-12 col-sm-12 col-12">
-                            <div class="contact-intro">
-                                <span>A Marketplace Initiative by Themart Theme - save more with coupons</span>
-                            </div>
-                        </div>
-                        <div class="col col-lg-6 col-md-12 col-sm-12 col-12">
-                            <div class="contact-info">
-                                <ul>
-                                    <li><a href="tel:869968236"><span>Need help? Call Us:</span>+ +869 968 236</a></li>
-                                    <li>
-                                        <div class="dropdown">
-                                            <button class="dropdown-toggle" type="button" id="dropdownMenuButton1"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                English
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                <li><a class="dropdown-item" href="#">English</a></li>
-                                                <li><a class="dropdown-item" href="#">Bangla</a></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown">
-                                            <button class="dropdown-toggle" type="button" id="dropdownMenuButton2"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                USD
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                                                <li><a class="dropdown-item" href="#">BDT</a></li>
-                                                <li><a class="dropdown-item" href="#">USD</a></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
             <!-- end topbar -->
             <!--  start header-middle -->
             <div class="header-middle">
@@ -95,7 +54,7 @@
                     <div class="row align-items-center">
                         <div class="col-lg-2">
                             <div class="navbar-header">
-                                <a class="navbar-brand" href="/"><img src="{{ asset('frontend/') }}/images/logo.svg"
+                                <a class="navbar-brand" href="/"><img src="{{ asset('frontend/') }}/images/logo.png"
                                         alt="logo"></a>
                             </div>
                         </div>
@@ -197,48 +156,60 @@
                                             </div>
                                         </div>
                                     </li>
+                                    @if (Auth::guard('customer')->check())
                                     <li>
                                         <div class="mini-cart">
                                             <button class="cart-toggle-btn"> <i class="fi flaticon-add-to-cart"></i>
-                                                <span class="cart-count">2</span></button>
+                                                @if (Auth::guard('customer')->user()->Cart->count() != 0)
+                                                <span class="cart-count">{{ Auth::guard('customer')->user()->Cart->count() }}</span>
+                                                @endif
+                                            </button>
                                             <div class="mini-cart-content">
                                                 <button class="mini-cart-close"><i class="ti-close"></i></button>
                                                 <div class="mini-cart-items">
+                                                    @php
+                                                        $subtotal = 0;
+                                                    @endphp
+                                                    @forelse (Auth::guard('customer')->user()->Cart as $cart)
+                                                    @php
+                                                        $price = $cart->Product->Inventory->where('color_id', $cart->color_id)->where('size_id', $cart->size_id)->first()->after_discount;
+                                                        $subtotal += $price * $cart->quantity;
+                                                    @endphp
                                                     <div class="mini-cart-item clearfix">
                                                         <div class="mini-cart-item-image">
-                                                            <a href="product.html"><img src="{{ asset('frontend/') }}/images/cart/img-1.jpg" alt></a>
+                                                            <a href=""><img src="{{ asset($cart->Product->preview_img) }}" alt></a>
                                                         </div>
                                                         <div class="mini-cart-item-des">
-                                                            <a href="product.html">Stylish Pink Coat</a>
-                                                            <span class="mini-cart-item-price">$150 x 1</span>
-                                                            <span class="mini-cart-item-quantity"><a href="#"><i
-                                                                        class="ti-close"></i></a></span>
+                                                            <a href="">{{ $cart->Product->product_name }}</a>
+                                                            <span class="mini-cart-item-price">&#2547; {{ $price }} x {{ $cart->quantity }}</span>
+                                                            <span class="mini-cart-item-quantity"><a href="{{ route('cart.remove', $cart->id) }}"><i
+                                                                class="ti-close"></i></a></span>
+                                                                <span>Color: {{ $cart->Color->color_name ?? '' }}, Size: {{ $cart->Size->size_name ?? '' }}</span>
                                                         </div>
                                                     </div>
-                                                    <div class="mini-cart-item clearfix">
-                                                        <div class="mini-cart-item-image">
-                                                            <a href="product.html"><img
-                                                                    src="{{ asset('frontend/') }}/images/cart/img-2.jpg"
-                                                                    alt></a>
-                                                        </div>
-                                                        <div class="mini-cart-item-des">
-                                                            <a href="product.html">Blue Bag</a>
-                                                            <span class="mini-cart-item-price">$120 x 2</span>
-                                                            <span class="mini-cart-item-quantity"><a href="#"><i
-                                                                        class="ti-close"></i></a></span>
-                                                        </div>
-                                                    </div>
+                                                    @empty
+                                                    <p>No Prodect Added To Cart</p>
+                                                    @endforelse
                                                 </div>
                                                 <div class="mini-cart-action clearfix">
                                                     <span class="mini-checkout-price">Subtotal:
-                                                        <span>$390</span></span>
+                                                        <span>&#2547; {{ $subtotal }}</span></span>
                                                     <div class="mini-btn">
-                                                        <a href="cart.html" class="view-cart-btn">View Cart</a>
+                                                        <a href="{{ route('cart') }}" class="view-cart-btn">View Cart</a>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </li>
+                                    @else
+                                    <li>
+                                        <a title="Cart" href="{{ route('customer.login') }}"> <!-- Link to login page -->
+                                            <div class="mini-cart">
+                                                <button class="cart-toggle-btn"> <i class="fi flaticon-add-to-cart"></i>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    @endif
                                 </ul>
                             </div>
                         </div>

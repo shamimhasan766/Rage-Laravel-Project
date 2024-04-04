@@ -231,6 +231,29 @@ License: You must have a valid license purchased only from above link or https:/
             </div>
           </li>
           <li class="nav-item">
+            <a class="nav-link"  data-toggle="collapse" href="#coupon">
+              <i class="link-icon" data-feather="pie-chart"></i>
+              <span class="link-title">Coupons</span>
+              <i class="link-arrow" data-feather="chevron-down"></i>
+            </a>
+            <div class="collapse" id="coupon">
+              <ul class="nav sub-menu">
+                <li class="nav-item">
+                  <a href="{{ route('all.coupon') }}" class="nav-link">All Coupons</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{ route('add.coupon') }}" class="nav-link">Add Coupon</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('charge') }}" class="nav-link">
+                <i class="link-icon" data-feather="pie-chart"></i>
+              <span class="link-title">Charge</span>
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#icons" role="button" aria-expanded="false" aria-controls="icons">
               <i class="link-icon" data-feather="smile"></i>
               <span class="link-title">Icons</span>

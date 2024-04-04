@@ -48,11 +48,11 @@ class FrontendController extends Controller
         $string = '';
         foreach($sizes as $size){
             if($size->size_id == null){
-                $string .= '<li class="color"><input id="size" type="radio" name="size" value="">
+                $string .= '<li class="color"><input class="size_id" id="size" type="radio" name="size" value="">
                                 <label for="size">NA</label>
                             </li>';
             }else{
-                $string .= '<li class="color"><input id="size'.$size->size_id.'" type="radio" name="size" value="'.$size->size_id.'">
+                $string .= '<li class="color"><input class="size_id" id="size'.$size->size_id.'" type="radio" name="size" value="'.$size->size_id.'">
                                 <label for="size'.$size->size_id.'">'.$size->Size->size_name.'</label>
                             </li>';
             }
@@ -95,5 +95,29 @@ class FrontendController extends Controller
         return view('frontend.all_product', [
             'products'=> $products
         ]);
+    }
+    function GetQuantityPrice(Request $request){
+        $product = Product::find($request->product_id);
+        $inventory = Inventory::where('product_id', $request->product_id)->where('color_id', $request->color_id)->where('size_id', $request->size_id)->get()->first();
+
+        if ($inventory) {
+            $quantity = '<h4>In Stock: '.$inventory->quantity.'</h4>';
+            if($product->discount){
+                $price = '<span class="present-price">&#2547;'.$inventory->after_discount.'</span>
+                <del class="old-price">&#2547;'.$inventory->price.'</del>';
+            }
+            else{
+                $price = '<span class="present-price">&#2547;'.$inventory->after_discount.'</span>';
+            }
+
+            return response()->json([
+                'quantity' => $quantity,
+                'price' => $price
+            ]);
+        } else {
+            return response()->json([
+                'error' => 'Inventory not found'
+            ], 404);
+        }
     }
 }

@@ -81,4 +81,29 @@ class CustomerController extends Controller
         $user->save();
         return back()->withAddress('Customer Address Updated');
     }
+
+    function CustomerUpdateAddresss(Request $request){
+        $customer = Auth::guard('customer')->user();
+        $customer->name = $request->name;
+        $customer->email = $request->email;
+        $customer->phone = $request->phone;
+        $customer->zip = $request->zip;
+        $customer->address = $request->address;
+        if ($request->password) {
+            $customer->password = bcrypt($request->password);
+        }
+        if ($request->photo) {
+            if ($customer->photo) {
+                unlink(public_path('uploads/customer/'.$customer->photo));
+            }
+            $photo = $request->photo;
+            $extension = $photo->extension;
+            $fileName = uniqid().'.'.$extension;
+            Image::make($photo)->save(public_path('uploads/customer/'.$fileName));
+            $customer->photo = bcrypt($request->password);
+        }
+        $customer->save();
+        return back();
+
+    }
 }
