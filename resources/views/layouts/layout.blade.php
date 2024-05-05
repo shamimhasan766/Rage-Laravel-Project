@@ -233,6 +233,29 @@ License: You must have a valid license purchased only from above link or https:/
           <li class="nav-item">
             <a class="nav-link"  data-toggle="collapse" href="#coupon">
               <i class="link-icon" data-feather="pie-chart"></i>
+              <span class="link-title">Orders</span>
+              <i class="link-arrow" data-feather="chevron-down"></i>
+            </a>
+            <div class="collapse" id="coupon">
+              <ul class="nav sub-menu">
+                <li class="nav-item">
+                  <a href="{{ route('orders') }}" class="nav-link">All Orders</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{ route('cancel.requests') }}" class="nav-link">Cancel Requests</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{ route('declined.requests') }}" class="nav-link">Declined Requests</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{ route('cancelled.order') }}" class="nav-link">Cancelled Orders</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"  data-toggle="collapse" href="#coupon">
+              <i class="link-icon" data-feather="pie-chart"></i>
               <span class="link-title">Coupons</span>
               <i class="link-arrow" data-feather="chevron-down"></i>
             </a>

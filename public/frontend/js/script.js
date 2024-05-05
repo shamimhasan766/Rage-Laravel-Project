@@ -138,6 +138,10 @@
         $('#open4').slideToggle();
         $('.caupon-wrap.s3').toggleClass('coupon-4')
     })
+    $('#togglebilling').on("click", function () {
+        $('#openbilling').slideToggle();
+        $('.caupon-wrap.s3').toggleClass('coupon-4')
+    })
 
     // toggle5
     $('#toggle5').on("click", function () {

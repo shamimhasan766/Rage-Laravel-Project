@@ -5,17 +5,24 @@ namespace App\Http\Controllers;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Customer;
+use App\Models\Order;
+use App\Models\OrderCancel;
+use App\Models\OrderProduct;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
+use PDF;
 
 class CustomerController extends Controller
 {
     function CustomerProfile(){
         $countries = Country::all();
+        $orders = Order::where('customer_id', Auth::guard('customer')->id())->get();
         return view('frontend.customer.profile', [
             'countries'=> $countries,
+            'orders'=> $orders
         ]);
     }
     function CustomerAccountDetails(Request $request){
@@ -105,5 +112,30 @@ class CustomerController extends Controller
         $customer->save();
         return back();
 
+    }
+    function DownloadInvoice($id){
+        $order = Order::find($id);
+        $orderproducts = OrderProduct::where('order_id', $order->order_id)->get();
+        $data = [
+            'order' => $order,
+            'orderproducts' => $orderproducts,
+        ];
+
+        $pdf = PDF::loadView('frontend.customer.download_invoice', $data);
+
+        return $pdf->stream('invoice.pdf');
+    }
+    function CancelOrderRequest($order_id){
+        return view('frontend.customer.cancel_request',[
+            'order_id'=> $order_id
+        ]);
+    }
+    function CancelOrderRequestStore(Request $request){
+        OrderCancel::insert([
+            'order_id'=> $request->order_id,
+            'reason'=> $request->reason,
+            'created_at'=> Carbon::now()
+        ]);
+        return back();
     }
 }

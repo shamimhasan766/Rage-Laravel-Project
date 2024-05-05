@@ -12,6 +12,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubcategoryController;
@@ -150,6 +151,9 @@ Route::post('customer/account/details', [CustomerController::class, 'CustomerAcc
 Route::post('customer/password/update', [CustomerController::class, 'CustomerPasswordUpdate'])->middleware('customer.auth')->name('customer.password.update');
 Route::post('customer/get/city', [CustomerController::class, 'CustomerGetCity'])->middleware('customer.auth')->name('customer.get.city');
 Route::post('customer/update/address', [CustomerController::class, 'CustomerUpdateAddress'])->middleware('customer.auth')->name('customer.update.address');
+Route::get('download/invoice/{id}', [CustomerController::class, 'DownloadInvoice'])->middleware('customer.auth')->name('download.invoice');
+Route::get('cancel/order/request/{order_id}', [CustomerController::class, 'CancelOrderRequest'])->middleware('customer.auth')->name('cancel.request');
+Route::post('cancel/order/request/store', [CustomerController::class, 'CancelOrderRequestStore'])->middleware('customer.auth')->name('cancel.request.store');
 
 
 // Cart
@@ -166,6 +170,11 @@ Route::post('store/coupon', [CouponController::class, 'StoreCoupon'])->middlewar
 
 // Checkout
 Route::get('checkout', [CheckoutController::class, 'Checkout'])->middleware('customer.auth')->name('checkout');
+Route::post('add/address', [CheckoutController::class, 'AddAddress'])->middleware('customer.auth')->name('add.address');
+Route::post('store/order', [CheckoutController::class, 'StoreOrder'])->middleware('customer.auth')->name('store.order');
+Route::get('delete/shipping/address/{id}', [CheckoutController::class, 'DeleteShippingAddress'])->middleware('customer.auth')->name('delete.shipping.address');
+Route::get('invoice/testing', [CheckoutController::class, 'InvoiceTesting'])->middleware('customer.auth')->name('invoice.testing');
+Route::get('order/success', [CheckoutController::class, 'OrderSuccess'])->middleware('customer.auth')->name('order.success');
 
 
 // Delevery Charge
@@ -173,6 +182,15 @@ Route::get('charge', [ChargeController::class, 'Charge'])->middleware('auth', 'v
 Route::post('store/charge', [ChargeController::class, 'StoreCharge'])->middleware('auth', 'verified')->name('store.charge');
 Route::get('delete/charge/{id}', [ChargeController::class, 'DeleteCharge'])->middleware('auth', 'verified')->name('delete.charge');
 Route::post('get/charge', [ChargeController::class, 'GetCharge'])->middleware('auth', 'verified')->name('get.charge');
+
+// Order
+Route::get('all/orders', [OrderController::class, 'Orders'])->middleware('auth', 'verified')->name('orders');
+Route::post('status/update/update/{id}', [OrderController::class, 'StatusUpdate'])->middleware('auth', 'verified')->name('status.update');
+Route::get('cancel/requests', [OrderController::class, 'CancelRequests'])->middleware('auth', 'verified')->name('cancel.requests');
+Route::get('cancelled/order', [OrderController::class, 'CancelledOrder'])->middleware('auth', 'verified')->name('cancelled.order');
+Route::get('declined/requests', [OrderController::class, 'DeclinedRequests'])->middleware('auth', 'verified')->name('declined.requests');
+Route::post('update/cancel/request/{id}', [OrderController::class, 'UpdateCancelRequests'])->middleware('auth', 'verified')->name('update.cancel.requests');
+
 
 
 

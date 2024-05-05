@@ -22,6 +22,9 @@ class Customer extends Authenticatable
     function City(){
         return $this->belongsTo(City::class, 'city_id');
     }
+    function BillingAddress(){
+        return $this->hasOne(BillingAddress::class);
+    }
     function Cart(){
         return $this->hasMany(Cart::class, 'customer_id');
     }

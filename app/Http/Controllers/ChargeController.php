@@ -32,7 +32,7 @@ class ChargeController extends Controller
     }
     function GetCharge(Request $request){
         $charge = Charge::find($request->charge_id);
-        $total = $charge->charge + $request->sub;
+        $total = ($charge->charge - $request->discount) + $request->sub;
         return $total;
     }
 }

@@ -107,7 +107,7 @@
                                                 <table class="table">
                                                     <thead>
                                                         <tr>
-                                                            <th>Order</th>
+                                                            <th>Order ID</th>
                                                             <th>Date</th>
                                                             <th>Status</th>
                                                             <th>Total</th>
@@ -115,27 +115,44 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
-                                                            <td>#1357</td>
-                                                            <td>March 45, 2020</td>
-                                                            <td>Processing</td>
-                                                            <td>$125.00 for 2 item</td>
-                                                            <td><a href="#" class="btn-small d-block">View</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>#2468</td>
-                                                            <td>June 29, 2020</td>
-                                                            <td>Completed</td>
-                                                            <td>$364.00 for 5 item</td>
-                                                            <td><a href="#" class="btn-small d-block">View</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>#2366</td>
-                                                            <td>August 02, 2020</td>
-                                                            <td>Completed</td>
-                                                            <td>$280.00 for 3 item</td>
-                                                            <td><a href="#" class="btn-small d-block">View</a></td>
-                                                        </tr>
+                                                        @foreach ($orders as $order)
+                                                            <tr>
+                                                                <td>{{ $order->order_id }}</td>
+                                                                <td>{{ $order->created_at->format('d-M-y') }}</td>
+                                                                <td>
+                                                                    @if ($order->status == 1)
+                                                                        <span class="badge bg-secondary">Placed</span>
+                                                                    @elseif ($order->status == 2)
+                                                                        <span class="badge bg-primary">Proccesing</span>
+                                                                    @elseif ($order->status == 3)
+                                                                        <span class="badge bg-warning">shipping</span>
+                                                                    @elseif ($order->status == 4)
+                                                                        <span class="badge bg-info">ready to deliver</span>
+                                                                    @elseif ($order->status == 5)
+                                                                        <span class="badge bg-success">Delivered</span>
+                                                                    @elseif ($order->status == 0)
+                                                                        <span class="badge bg-danger">cancelled</span>
+                                                                    @endif
+                                                                </td>
+                                                                <td>&#2547; {{ ($order->total - $order->discount)+ $order->charge }}</td>
+                                                                <td>
+                                                                    <a target="blank" href="{{ route('download.invoice', $order->id) }}" class="btn btn-sm btn-success">Download Invoice</a>
+
+                                                                    @if ($order->OrderCancel)
+                                                                    @if ($order->OrderCancel->status == 0)
+                                                                    <a class="btn btn-sm bg-success">Request Pending</a>
+                                                                    @elseif($order->OrderCancel->status == 1)
+                                                                    <a class="btn btn-sm bg-info">Approved</a>
+                                                                    @elseif($order->OrderCancel->status == 2)
+                                                                    <a class="btn btn-sm bg-secondary">Reques Denied</a>
+                                                                    @endif
+                                                                    @else
+                                                                    <a target="blank" href="{{ route('cancel.request', $order->order_id) }}" class="btn btn-sm bg-danger">Cancel Request</a>
+                                                                    @endif
+
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
                                                     </tbody>
                                                 </table>
                                             </div>

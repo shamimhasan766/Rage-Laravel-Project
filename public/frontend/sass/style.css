@@ -11351,6 +11351,9 @@ ul li {
 .wpo-checkout-area #open4 {
   display: none;
 }
+.wpo-checkout-area #openbilling {
+  display: none;
+}
 
 .wpo-checkout-area .create-account p {
   margin-bottom: 15px;
