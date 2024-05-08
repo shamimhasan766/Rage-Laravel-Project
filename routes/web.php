@@ -15,6 +15,7 @@ use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SslCommerzPaymentController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
@@ -174,7 +175,7 @@ Route::post('add/address', [CheckoutController::class, 'AddAddress'])->middlewar
 Route::post('store/order', [CheckoutController::class, 'StoreOrder'])->middleware('customer.auth')->name('store.order');
 Route::get('delete/shipping/address/{id}', [CheckoutController::class, 'DeleteShippingAddress'])->middleware('customer.auth')->name('delete.shipping.address');
 Route::get('invoice/testing', [CheckoutController::class, 'InvoiceTesting'])->middleware('customer.auth')->name('invoice.testing');
-Route::get('order/success', [CheckoutController::class, 'OrderSuccess'])->middleware('customer.auth')->name('order.success');
+Route::get('order/success', [CheckoutController::class, 'OrderSuccess'])->name('order.success');
 
 
 // Delevery Charge
@@ -191,6 +192,17 @@ Route::get('cancelled/order', [OrderController::class, 'CancelledOrder'])->middl
 Route::get('declined/requests', [OrderController::class, 'DeclinedRequests'])->middleware('auth', 'verified')->name('declined.requests');
 Route::post('update/cancel/request/{id}', [OrderController::class, 'UpdateCancelRequests'])->middleware('auth', 'verified')->name('update.cancel.requests');
 
+
+// SSLCOMMERZ Start
+Route::get('/pay', [SslCommerzPaymentController::class, 'index']);
+Route::post('/pay-via-ajax', [SslCommerzPaymentController::class, 'payViaAjax']);
+
+Route::post('/success', [SslCommerzPaymentController::class, 'success']);
+Route::post('/fail', [SslCommerzPaymentController::class, 'fail']);
+Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
+
+Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
+//SSLCOMMERZ END
 
 
 

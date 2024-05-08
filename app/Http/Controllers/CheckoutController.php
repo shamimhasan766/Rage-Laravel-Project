@@ -108,7 +108,7 @@ class CheckoutController extends Controller
 
             $carts = Cart::where('customer_id', Auth::guard('customer')->id())->get();
             foreach($carts as $cart){
-                $price = $cart->Product->Inventory->where('color_id', $cart->color_id)->where('size_id', $cart->size_id)->first()->after_discount;
+                $InventoryItem = $cart->Product->Inventory->where('color_id', $cart->color_id)->where('size_id', $cart->size_id)->first();
                 OrderProduct::insert([
                     'order_id'=> $order_id,
                     'customer_id'=> Auth::guard('customer')->id(),
@@ -116,9 +116,10 @@ class CheckoutController extends Controller
                     'color_id'=> $cart->color_id,
                     'size_id'=> $cart->size_id,
                     'quantity'=> $cart->quantity,
-                    'price'=> $price
+                    'price'=> $InventoryItem->after_discount,
+                    'created_at'=> Carbon::now()
                 ]);
-
+                $InventoryItem->decrement('quantity', $cart->quantity);
                 $cart->delete();
             }
 
@@ -150,6 +151,19 @@ class CheckoutController extends Controller
             // curl_close($ch);
 
             return redirect()->route('order.success');
+        }
+        elseif($request->payment == 2){
+            $billingaddress = BillingAddress::where('customer_id', Auth::guard('customer')->id())->get()->first();
+            $charge = Charge::find($request->selected_charge);
+            $data = [
+                'customer_id'=> Auth::guard('customer')->id(),
+                'total'=> $request->sub,
+                'discount'=> $request->discount,
+                'charge'=> $charge->charge,
+                'shipping_id'=> $charge->shipping_id,
+                'billing_id'=> $billingaddress->id,
+            ];
+            return redirect('/pay')->with('data', $data);
         }
     }
     function InvoiceTesting(){
