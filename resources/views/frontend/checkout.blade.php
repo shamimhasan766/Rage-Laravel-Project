@@ -262,6 +262,9 @@
                                     </div>
                                 </div>
                             </div>
+                            @error('selected_charge')
+                                <strong class="text-danger">{{ $message }}</strong>
+                            @enderror
                             <div class="caupon-wrap s5">
                                 <div class="payment-area">
                                     <div class="row">

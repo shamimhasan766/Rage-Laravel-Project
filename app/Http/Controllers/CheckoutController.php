@@ -89,6 +89,12 @@ class CheckoutController extends Controller
         return back()->withSuccess('Shipping Address Deleted');
     }
     function StoreOrder(Request $request){
+        $request->validate([
+            'selected_charge'=> 'required'
+        ],
+        [
+            'selected_charge.required'=> 'please select delevery charge'
+        ]);
         if($request->payment == 1){
 
             $billingaddress = BillingAddress::where('customer_id', Auth::guard('customer')->id())->get()->first();
@@ -164,6 +170,19 @@ class CheckoutController extends Controller
                 'billing_id'=> $billingaddress->id,
             ];
             return redirect('/pay')->with('data', $data);
+        }
+        elseif($request->payment == 3){
+            $billingaddress = BillingAddress::where('customer_id', Auth::guard('customer')->id())->get()->first();
+            $charge = Charge::find($request->selected_charge);
+            $data = [
+                'customer_id'=> Auth::guard('customer')->id(),
+                'total'=> $request->sub,
+                'discount'=> $request->discount,
+                'charge'=> $charge->charge,
+                'shipping_id'=> $charge->shipping_id,
+                'billing_id'=> $billingaddress->id,
+            ];
+            return redirect()->route('stripe.pay')->with('data', $data)->with('main_total', ($request->sub + $charge->charge)- $request->discount);
         }
     }
     function InvoiceTesting(){

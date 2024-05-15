@@ -5,10 +5,16 @@ namespace App\Http\Controllers;
 use DB;
 use Illuminate\Http\Request;
 use App\Library\SslCommerz\SslCommerzNotification;
+use App\Mail\InvoiceMail;
 use App\Models\BillingAddress;
+use App\Models\Cart;
 use App\Models\Charge;
+use App\Models\Order;
+use App\Models\OrderProduct;
+use App\Models\Sslorder;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class SslCommerzPaymentController extends Controller
 {
@@ -154,6 +160,66 @@ class SslCommerzPaymentController extends Controller
 
     public function success(Request $request)
     {
+        $tran_id = $request->input('tran_id');
+        $data = Sslorder::where('transaction_id', $tran_id)->first();
+
+        $order_id = '1010'. random_int(000000, 999999);
+        Order::insert([
+            'order_id'=> $order_id,
+            'customer_id'=> $data->customer_id,
+            'total'=> $data->total,
+            'discount'=> $data->discount,
+            'charge'=> $data->charge,
+            'billing_id'=> $data->billing_id,
+            'shipping_id'=> $data->shipping_id,
+            'payment_type'=> 2,
+            'created_at'=> Carbon::now(),
+        ]);
+
+        $carts = Cart::where('customer_id', $data->customer_id)->get();
+        foreach($carts as $cart){
+            $InventoryItem = $cart->Product->Inventory->where('color_id', $cart->color_id)->where('size_id', $cart->size_id)->first();
+            OrderProduct::insert([
+                'order_id'=> $order_id,
+                'customer_id'=> $data->customer_id,
+                'product_id'=> $cart->product_id,
+                'color_id'=> $cart->color_id,
+                'size_id'=> $cart->size_id,
+                'quantity'=> $cart->quantity,
+                'price'=> $InventoryItem->after_discount,
+                'created_at'=> Carbon::now()
+            ]);
+            $InventoryItem->decrement('quantity', $cart->quantity);
+            $cart->delete();
+        }
+
+        // Sending Invoice Mail
+        $billingaddress = BillingAddress::find($data->billing_id);
+
+        Mail::to($billingaddress->email)->send(new InvoiceMail($order_id));
+
+
+        //SMS
+        $url = "http://bulksmsbd.net/api/smsapi";
+        $api_key = "x6nwYLhKPEvYcIRwzCeL";
+        $senderid = "8809617618226";
+        $number = $billingaddress->phone;
+        $message = "Your Ecommerce Order has been placed. Order Id : #$order_id . You will get your parcel soon... your total payment amount TK ".($data->total - $data->discount)+ $data->charge ."--/ has been paid by SSLCommerz";
+
+        $data = [
+            "api_key" => $api_key,
+            "senderid" => $senderid,
+            "number" => $number,
+            "message" => $message
+        ];
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $response = curl_exec($ch);
+        curl_close($ch);
        return redirect()->route('order.success');
 
     }
